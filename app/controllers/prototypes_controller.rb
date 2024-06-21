@@ -1,10 +1,15 @@
 class PrototypesController < ApplicationController
   # サインインしていないユーザーのアクセスを制限する
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_active_storage_current_url_options
+  before_action :set_active_storage_current_url_options, only: [:show] # showアクションのみで設定
 
   def index
     @prototypes = Prototype.all
+  end
+
+  def show
+    @prototype = Prototype.find(params[:id])
+    # 追加の処理はここに記述する（例えば、コメントの取得など）
   end
 
   def new
@@ -32,6 +37,6 @@ class PrototypesController < ApplicationController
   end
 
   def prototype_params
-    params.require(:prototype).permit(:title, :catch_copy, :concept, :image)
+    params.require(:prototype).permit(:title, :catch_copy, :concept, :image).merge(user_id: current_user.id)
   end
 end
