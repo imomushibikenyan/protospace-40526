@@ -40,6 +40,15 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
+# Active Storage service URL expiration time
+config.active_storage.service_urls_expire_in = 2.days
+
+# Active Storage URL options (ここで URL のオプションを設定する)
+  config.active_storage.url_options = {
+  host: 'example.com',  # 適切なホストを設定する
+  protocol: 'https'     # HTTPまたはHTTPSを選択する
+  }
+
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
   # config.action_cable.url = "wss://example.com/cable"

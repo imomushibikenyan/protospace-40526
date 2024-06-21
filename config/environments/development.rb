@@ -36,35 +36,25 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  # Active Storage service URL expiration time
+  config.active_storage.service_urls_expire_in = 2.days
 
-  config.action_mailer.perform_caching = false
+  # Active Storage URL options
+  config.active_storage.url_options = {
+    host: 'localhost',  # 適切なホストを設定する
+    port: 3000,          # 適切なポートを設定する
+    protocol: 'http'     # HTTPまたはHTTPSを選択する
+  }
 
-  # Print deprecation notices to the Rails logger.
-  config.active_support.deprecation = :log
+  # Active Storage URL options for generating URLs
+  config.after_initialize do
+    Rails.application.routes.default_url_options = {
+      host: 'localhost',
+      port: 3000,
+      protocol: 'http'
+    }
+    ActiveStorage::Current.host = 'http://localhost:3000'
+  end
 
-  # Raise exceptions for disallowed deprecations.
-  config.active_support.disallowed_deprecation = :raise
-
-  # Tell Active Support which deprecation messages to disallow.
-  config.active_support.disallowed_deprecation_warnings = []
-
-  # Raise an error on page load if there are pending migrations.
-  config.active_record.migration_error = :page_load
-
-  # Highlight code that triggered database queries in logs.
-  config.active_record.verbose_query_logs = true
-
-  # Suppress logger output for asset requests.
-  config.assets.quiet = true
-
-  # Raises error for missing translations.
-  # config.i18n.raise_on_missing_translations = true
-
-  # Annotate rendered view with file names.
-  # config.action_view.annotate_rendered_view_with_filenames = true
-
-  # Uncomment if you wish to allow Action Cable access from any origin.
-  # config.action_cable.disable_request_forgery_protection = true
+  # 既存の設定...
 end
