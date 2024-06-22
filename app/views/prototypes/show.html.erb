@@ -1,7 +1,7 @@
 <main class="main">
   <div class="inner">
     <div class="prototype__wrapper">
-      <p class="prototype__heading">
+      <p class="prototype__hedding">
         <%= @prototype.title %>
       </p>
       <%= link_to "by #{@prototype.user.name}", user_path(@prototype.user), class: :prototype__user %>
@@ -10,7 +10,7 @@
       <% if current_user == @prototype.user %>
         <div class="prototype__manage">
           <%= link_to "編集する", edit_prototype_path(@prototype), class: :prototype__btn %>
-          <%= link_to "削除する", prototype_path(@prototype), method: :delete, data: { confirm: "本当に削除しますか？" }, class: :prototype__btn %>
+          <%= link_to "削除する", prototype_path(@prototype), data: { turbo_method: :delete }, class: :prototype__btn %>
         </div>
       <% end %>
       <%# // ログインユーザーとプロトタイプの投稿者が同じ場合に編集・削除ボタンを表示する %>
@@ -40,8 +40,12 @@
 
       <div class="prototype__comments">
         <ul class="comments_lists">
-          <%# プロトタイプに紐づくコメントを一覧表示する %>
-          
+          <%# 投稿に紐づくコメントを一覧する処理を記述する %>
+            <li class="comments_list">
+              <%# <%= " コメントのテキスト "%>
+              <%# <%= link_to "（ ユーザー名 ）", root_path, class: :comment_user %>
+            </li>
+          <%# // 投稿に紐づくコメントを一覧する処理を記述する %>
         </ul>
       </div>
     </div>

@@ -48,12 +48,13 @@ Rails.application.configure do
 
   # Active Storage URL options for generating URLs
   config.after_initialize do
-    Rails.application.routes.default_url_options = {
+    ActiveStorage::Current.url_options = {
       host: 'localhost',
       port: 3000,
       protocol: 'http'
     }
-    ActiveStorage::Current.host = 'http://localhost:3000'
+    ActiveStorage::Current.url_options = { host: 'localhost', port: 3000, protocol: 'http' }
+
   end
 
   # 既存の設定...
