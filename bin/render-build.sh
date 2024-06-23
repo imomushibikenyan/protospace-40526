@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # exit on error
 set -o errexit
-set -o nounset
 
 bundle install
 bundle exec rake assets:precompile
