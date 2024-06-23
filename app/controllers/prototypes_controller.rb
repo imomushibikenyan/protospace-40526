@@ -1,8 +1,8 @@
 class PrototypesController < ApplicationController
   # サインインしていないユーザーのアクセスを制限する
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_active_storage_current_url_options, only: [:show] # showアクションのみで設定
-  before_action :set_prototype, only: [:show, :edit, :update, :destroy] # show, edit, updateアクションで設定
+  before_action :set_prototype, only: [:show, :edit, :update, :destroy]
+  before_action :check_author, only: [:edit, :update, :destroy]
 
   def index
     @prototypes = Prototype.all
@@ -65,5 +65,11 @@ class PrototypesController < ApplicationController
 
   def prototype_params
     params.require(:prototype).permit(:title, :catch_copy, :concept, :image).merge(user_id: current_user.id)
+  end
+
+  def check_author
+    unless current_user == @prototype.user
+      redirect_to root_path, alert: "You are not authorized to perform this action."
+    end
   end
 end
