@@ -7,9 +7,12 @@ class CommentsController < ApplicationController
     @comment.user = current_user
 
     if @comment.save
+      # コメントの保存が成功した場合
+      @comments = @prototype.comments
       redirect_to @prototype, notice: 'コメントが投稿されました。'
     else
-      # エラー処理（例えば、再度投稿フォームを表示するなど）
+      # コメントの保存が失敗した場合
+      @comments = @prototype.comments
       render 'prototypes/show'
     end
   end
