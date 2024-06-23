@@ -58,6 +58,7 @@ test:
 #
 production:
   <<: *default
+  adapter: mysql2
   database: protospace_40526_production
   username: protospace_40526
   password: <%= ENV["PROTOSPACE_40526_DATABASE_PASSWORD"] %>
