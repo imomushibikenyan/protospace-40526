@@ -10,7 +10,8 @@ class PrototypesController < ApplicationController
 
   def show
     @prototype = Prototype.find(params[:id])
-    # 追加の処理はここに記述する（例えば、コメントの取得など）
+    @comments = @prototype.comments.order(created_at: :desc)
+    @comment = Comment.new
   end
 
   def new

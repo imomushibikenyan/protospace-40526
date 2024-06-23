@@ -40,13 +40,24 @@
 
       <div class="prototype__comments">
         <ul class="comments_lists">
-          <%# 投稿に紐づくコメントを一覧する処理を記述する %>
+          <% @comments.each do |comment| %>
             <li class="comments_list">
-              <%# <%= " コメントのテキスト "%>
-              <%# <%= link_to "（ ユーザー名 ）", root_path, class: :comment_user %>
+              <%= comment.content %>
+        <%= link_to comment.user.name, user_path(comment.user), class: :comment_user %>
             </li>
-          <%# // 投稿に紐づくコメントを一覧する処理を記述する %>
+          <% end %>
         </ul>
+
+        <%# コメント投稿フォーム %>
+        <% if user_signed_in? %>
+          <%= form_with(model: [ @prototype, @comment ], url: prototype_comments_path(@prototype), local: true) do |form| %>
+            <%= form.text_area :content, placeholder: 'コメントを入力してください', class: 'comment_text' %>
+            <%= form.submit '投稿する', class: 'comment_submit' %>
+          <% end %>
+        <% else %>
+          <%= link_to 'ログインしてコメントする', new_user_session_path %>
+        <% end %>
+        <%# // コメント投稿フォーム %>
       </div>
     </div>
   </div>
